@@ -66,4 +66,27 @@ export class Utils {
   sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
+
+  getTree(list) {
+    const result = [];
+    if (!Array.isArray(list)) {
+      return result;
+    }
+    list.forEach(item => {
+      delete item.children;
+    });
+    const map = {};
+    list.forEach(item => {
+      map[item.id] = item;
+    });
+    list.forEach(item => {
+      const parent = map[item.pid];
+      if (parent) {
+        (parent.children || (parent.children = [])).push(item);
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  }
 }

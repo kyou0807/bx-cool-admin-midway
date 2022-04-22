@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import { NextFunction, Context } from '@midwayjs/koa';
 import { IMiddleware, IMidwayApplication } from '@midwayjs/core';
 import { CacheManager } from '@midwayjs/cache';
-
+const localRegExp = '|.*/valueSet/';
 /**
  * 权限校验
  */
@@ -38,7 +38,7 @@ export class BaseAuthorityMiddleware
           ctx.admin = jwt.verify(token, this.jwtConfig.jwt.secret);
         } catch (err) {}
         // 不需要登录 无需权限校验
-        if (new RegExp(`^${adminUrl}?.*/open/`).test(url)) {
+        if (new RegExp(`^${adminUrl}?.*/open/${localRegExp}`).test(url)) {
           await next();
           return;
         }
