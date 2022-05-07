@@ -12,7 +12,7 @@ import * as localTask from '@midwayjs/task';
 import * as swagger from '@midwayjs/swagger';
 
 // import * as socketio from '@midwayjs/socketio';
-// import * as task from '@cool-midway/task';
+import * as task from '@cool-midway/task';
 // import * as pay from '@cool-midway/pay';
 // import * as es from '@cool-midway/es';
 // import * as rpc from '@cool-midway/rpc';
@@ -43,7 +43,7 @@ import * as swagger from '@midwayjs/swagger';
       enabledEnvironment: ['local'],
     },
     // 任务与队列
-    // task,
+    task,
     // 支付 微信与支付宝
     // pay,
     // elasticsearch

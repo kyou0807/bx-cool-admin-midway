@@ -20,6 +20,7 @@ export abstract class TaskInfoQueue extends BaseCoolQueue {
       const result = await this.taskInfoService.invokeService(job.data.service);
       this.taskInfoService.record(job.data, 1, JSON.stringify(result));
     } catch (error) {
+      console.log('error: ', typeof error);
       this.taskInfoService.record(job.data, 0, error.message);
     }
     if (!job.data.isOnce) {

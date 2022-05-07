@@ -3,7 +3,7 @@ import { CoolController, BaseController, CoolEps } from '@cool-midway/core';
 import { Context } from '@midwayjs/koa';
 import { CoolFile } from '@cool-midway/file';
 import { ValueSetService } from '../../service/sys/valueSet';
-import { Utils } from '../../../../comm/utils';
+
 /**
  * 不需要登录的后台接口
  */
@@ -21,9 +21,6 @@ export class BaseAppCommController extends BaseController {
 
   @Inject()
   eps: CoolEps;
-
-  @Inject()
-  utils: Utils;
 
   /**
    * 实体信息与路径
@@ -45,15 +42,7 @@ export class BaseAppCommController extends BaseController {
   @Post('/getValueSetByEname', { summary: '根据ename获取值集' })
   async getValueSetByEname(@Body('ename') ename: string) {
     let list = await this.valueSetService.getValueSetByEname({ ename });
-    return this.ok(
-      this.utils.getTree(
-        list.map(item => {
-          delete item.createTime;
-          delete item.updateTime;
-          return item;
-        })
-      )
-    );
+    return this.ok(list);
   }
 
   /**

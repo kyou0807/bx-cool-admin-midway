@@ -5,7 +5,7 @@ import * as jwt from 'jsonwebtoken';
 import { NextFunction, Context } from '@midwayjs/koa';
 import { IMiddleware, IMidwayApplication } from '@midwayjs/core';
 import { CacheManager } from '@midwayjs/cache';
-const localRegExp = '|.*/structure/';
+const localRegExp = '|.*/comm/downloadDist';
 /**
  * 权限校验
  */

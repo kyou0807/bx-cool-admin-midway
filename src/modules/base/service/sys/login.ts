@@ -107,7 +107,7 @@ export class BaseSysLoginService extends BaseService {
    * @param width 宽
    * @param height 高
    */
-  async captcha(type: string, width = 150, height = 50) {
+  async captcha(type: string, width = 150, height = 50, getCode) {
     const svg = svgCaptcha.create({
       ignoreChars: 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM',
       width,
@@ -116,6 +116,7 @@ export class BaseSysLoginService extends BaseService {
     const result = {
       captchaId: uuid(),
       data: svg.data.replace(/"/g, "'"),
+      code: '',
     };
     // 文字变白
     const rpList = [
@@ -141,6 +142,11 @@ export class BaseSysLoginService extends BaseService {
       svg.text.toLowerCase(),
       { ttl: 1800 }
     );
+    if (getCode) {
+      result.code = svg.text.toLowerCase();
+    } else {
+      delete result.code;
+    }
     return result;
   }
 

@@ -1,16 +1,9 @@
 /*
- * @Description:
- * @Autor: 池樱千幻
- * @Change: 池樱千幻
- * @Date: 2022-04-20 17:18:13
- * @LastEditTime: 2022-04-21 15:47:20
- */
-/*
  * @Description:值集查询
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-20 17:14:09
- * @LastEditTime: 2022-04-20 17:15:16
+ * @LastEditTime: 2022-04-28 00:35:17
  */
 import { Provide, Post, Inject, Body } from '@midwayjs/decorator';
 import { CoolController, BaseController } from '@cool-midway/core';
@@ -35,5 +28,11 @@ export class valueSetAdminController extends BaseController {
   @Post('/getValueSetRoot')
   async getValueSetRoot(@Body('pid') pid: number) {
     return this.ok(await this.valueSetService.getValueSetRoot({ pid }));
+  }
+
+  @Post('/getValueSetByEname', { summary: '根据ename获取值集' })
+  async getValueSetByEname(@Body('ename') ename: string) {
+    let list = await this.valueSetService.getValueSetByEname({ ename });
+    return this.ok(list);
   }
 }

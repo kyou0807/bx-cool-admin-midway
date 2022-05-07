@@ -17,5 +17,12 @@
       ""
     ],
     "description": "cool-admin entity代码片段"
+  },
+  "api": {
+    "prefix": "api",
+    "body": [
+      "@ApiProperty({ example: '${1}', description: '${2}' })"
+    ],
+    "description": "swagger - ApiProperty"
   }
 }

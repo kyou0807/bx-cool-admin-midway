@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:35:51
- * @LastEditTime: 2022-04-25 23:11:59
+ * @LastEditTime: 2022-04-28 13:02:33
  */
 import { Provide, Inject } from '@midwayjs/decorator';
 import { CoolController, BaseController } from '@cool-midway/core';
@@ -13,7 +13,6 @@ import { ProjectService } from '../../service/project';
 import { ProjectRoleEntity } from '../../entity/project_role';
 import { SelectQueryBuilder } from 'typeorm';
 import { BaseSysRoleEntity } from '../../../base/entity/sys/role';
-import { BaseSysUserRoleEntity } from '../../../base/entity/sys/user_role';
 const uuid = require('node-uuid');
 /**
  * 描述
