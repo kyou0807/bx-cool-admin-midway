@@ -2,7 +2,7 @@ import { CoolConfig } from '@cool-midway/core';
 import { MODETYPE } from '@cool-midway/file';
 import { MidwayConfig } from '@midwayjs/core';
 import * as redisStore from 'cache-manager-ioredis';
-import * as fsStore from 'cache-manager-fs-hash';
+// import * as fsStore from 'cache-manager-fs-hash';
 
 export default {
   // 修改成你自己独有的key

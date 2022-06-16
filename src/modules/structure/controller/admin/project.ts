@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:35:51
- * @LastEditTime: 2022-04-28 13:02:33
+ * @LastEditTime: 2022-05-19 16:14:56
  */
 import { Provide, Inject } from '@midwayjs/decorator';
 import { CoolController, BaseController } from '@cool-midway/core';

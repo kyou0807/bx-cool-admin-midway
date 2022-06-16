@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 09:33:51
- * @LastEditTime: 2022-05-06 15:20:52
+ * @LastEditTime: 2022-05-19 16:02:20
  */
 import { EntityModel } from '@midwayjs/orm';
 import { BaseEntity } from '@cool-midway/core';
@@ -19,7 +19,7 @@ export class ProjectEntity extends BaseEntity {
   @ApiProperty({ example: '', description: '项目名称' })
   name: string;
 
-  @Column({ comment: '项目描述' })
+  @Column({ comment: '项目描述', default: '' })
   @ApiProperty({ example: '', description: '项目描述' })
   description: string;
 

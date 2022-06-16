@@ -25,5 +25,12 @@
       ""
     ],
     "description": "cool-admin middleware代码片段"
+  },
+  "error": {
+    "prefix": "error",
+    "body": [
+      "throw new CoolCommException('$1');"
+    ],
+    "description": "cool-admin middleware-error抛出"
   }
 }
