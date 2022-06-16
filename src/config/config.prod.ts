@@ -8,7 +8,7 @@ export default {
   orm: {
     type: 'mysql',
     host: '42.192.94.104',
-    port: 32768,
+    port: 49154,
     username: 'root',
     password: 'kyou0807',
     database: 'kyou',
