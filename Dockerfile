@@ -30,7 +30,6 @@ RUN npm config set registry https://registry.npm.taobao.org
 
 # 安装开发期依赖
 COPY package.json ./package.json
-RUN npm install uuid -g
 RUN npm install
 # 构建项目
 COPY . .
