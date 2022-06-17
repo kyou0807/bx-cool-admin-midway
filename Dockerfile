@@ -30,6 +30,7 @@ RUN npm config set registry https://registry.npm.taobao.org
 
 # 安装开发期依赖
 COPY package.json ./package.json
+RUN npm install uuid -g
 RUN npm install
 # 构建项目
 COPY . .
@@ -37,7 +38,7 @@ RUN npm run build
 # 删除开发期依赖
 RUN rm -rf node_modules && rm package-lock.json    
 # 安装生产环境依赖   
-RUN npm install              
+RUN npm install --production                          
 
 # 如果端口更换，这边可以更新一下
 EXPOSE 8001
