@@ -3,12 +3,18 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:37:02
- * @LastEditTime: 2022-04-25 23:12:36
+ * @LastEditTime: 2022-06-17 09:42:12
  */
-import { Provide } from '@midwayjs/decorator';
-import { CoolController, BaseController } from '@cool-midway/core';
+import { Body, Inject, Post, Provide } from '@midwayjs/decorator';
+import {
+  CoolController,
+  BaseController,
+  CoolCommException,
+} from '@cool-midway/core';
 import { PagesEntity } from '../../entity/pages';
 import { ProjectEntity } from '../../entity/project';
+import { PagesService } from '../../service/pages';
+import { Context } from '@midwayjs/koa';
 const uuid = require('node-uuid');
 /**
  * 描述
@@ -55,4 +61,40 @@ const uuid = require('node-uuid');
     },
   },
 })
-export class PagesAdminController extends BaseController {}
+export class PagesAdminController extends BaseController {
+  @Inject()
+  pagesService: PagesService;
+
+  @Inject()
+  ctx: Context;
+
+  @Post('/getPagesListByProjectUuid', { summary: '根据项目uuid获取页面列表' })
+  async getPagesListByProjectUuid(@Body('projectUuid') projectUuid: string) {
+    if (!projectUuid) {
+      throw new CoolCommException('项目uuid不能为空');
+    }
+    return this.ok(
+      await this.pagesService.getPagesListByProjectUuid(
+        projectUuid,
+        this.ctx.admin.roleIds
+      )
+    );
+  }
+
+  @Post('/getPageInfoByIdOrUuid', { summary: '根据页面id或者uui获取页面详情' })
+  async getPageInfoByIdOrUuid(
+    @Body('uuid') uuid: string,
+    @Body('id') id: string
+  ) {
+    if (uuid === undefined && id === undefined) {
+      throw new CoolCommException('页面uuid或id不能为空');
+    }
+    return this.ok(
+      await this.pagesService.getPageInfoByIdOrUuid(
+        id,
+        uuid,
+        this.ctx.admin.roleIds
+      )
+    );
+  }
+}
