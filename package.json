@@ -30,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "mini-svg-data-uri": "^1.4.4",
     "mysql2": "^2.3.3",
+    "node-uuid": "^1.4.8",
     "svg-captcha": "^1.4.0",
     "typeorm": "0.2.45"
   },
