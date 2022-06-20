@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 import { Utils } from '../../../comm/utils';
 import { TaskInfoQueue } from '../queue/task';
 import { IMidwayApplication } from '@midwayjs/core';
+import { Context } from '@midwayjs/koa';
 
 /**
  * 任务
@@ -40,6 +41,24 @@ export class TaskInfoService extends BaseService {
 
   @Inject()
   utils: Utils;
+
+  @Inject()
+  ctx: Context;
+
+  // 根据roleIds 判断权限,来查询任务列表
+  async page(query) {
+    // 如果用户是admin,就不判断权限,如果不是,就根据项目的roleIds判断
+    let sql = `select * from task_info where 1=1  ${this.setSql(
+      this.ctx.admin.username !== 'admin',
+      'and id IN ( SELECT taskId FROM project WHERE uuid IN ( SELECT projectUuid FROM project_role WHERE  roleId IN (?)))',
+      [this.ctx.admin.roleIds]
+    )} ${this.setSql(
+      query.status,
+      'and status = ?',
+      query.status
+    )} ${this.setSql(query.type, 'and type = ?', query.type)}`;
+    return this.sqlRenderPage(sql, query);
+  }
 
   /**
    * 停止任务
@@ -189,6 +208,12 @@ export class TaskInfoService extends BaseService {
    */
   async log(query) {
     const { id, status } = query;
+    // ${this.setSql(
+    //   this.ctx.admin.username !== 'admin',
+    //   'and id IN ( SELECT taskId FROM project WHERE uuid IN ( SELECT projectUuid FROM project_role WHERE  roleId IN (?)))',
+    //   [this.ctx.admin.roleIds]
+    // )}
+    // 如果id有值,就查id的日志,如果没有值,就判断admin,不是admin,就要有权限的任务才能查看
     return await this.sqlRenderPage(
       `
       SELECT
@@ -199,6 +224,11 @@ export class TaskInfoService extends BaseService {
       JOIN task_info b ON a.taskId = b.id
       where 1=1
       ${this.setSql(id, 'and a.taskId = ?', [id])}
+      ${this.setSql(
+        !id && this.ctx.admin.username !== 'admin',
+        'and a.taskId IN ( SELECT taskId FROM project WHERE uuid IN ( SELECT projectUuid FROM project_role WHERE  roleId IN (?)))',
+        [this.ctx.admin.roleIds]
+      )}
       ${this.setSql(status, 'and a.status = ?', [status])}
       `,
       query

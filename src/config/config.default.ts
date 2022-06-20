@@ -6,7 +6,7 @@ import * as redisStore from 'cache-manager-ioredis';
 
 export default {
   // 修改成你自己独有的key
-  keys: 'cool-admin for node',
+  keys: 'kyou-midway-admin',
   koa: {
     port: 8001,
   },
@@ -36,6 +36,7 @@ export default {
       port: 6380,
       password: '',
       db: 1,
+      ttl: null,
     },
   },
   // cool配置
@@ -51,7 +52,8 @@ export default {
       host: '42.192.94.104',
       port: 6380,
       password: '',
-      db: 0,
+      db: 1,
+      ttl: null,
     },
   } as CoolConfig,
 } as

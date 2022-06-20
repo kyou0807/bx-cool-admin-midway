@@ -69,6 +69,7 @@ export class BaseSysLoginService extends BaseService {
 
       // 生成token
       const { expire, refreshExpire } = this.coolConfig.jwt.token;
+      console.log('这里有执行,额?????!~~~~~~~~~~~~~~~');
       const result = {
         expire,
         token: await this.generateToken(user, roleIds, expire),

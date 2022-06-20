@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-21 15:24:45
- * @LastEditTime: 2022-04-28 00:11:27
+ * @LastEditTime: 2022-06-20 13:39:27
  */
 import { Provide, Inject } from '@midwayjs/decorator';
 import { BaseService } from '@cool-midway/core';
@@ -11,6 +11,7 @@ import { InjectEntityModel } from '@midwayjs/orm';
 import { Repository } from 'typeorm';
 import { valueSetEntity } from '../../entity/sys/value_set';
 import { Utils } from '../../../../comm/utils';
+import { CoolCache } from '@cool-midway/core';
 /**
  * 描述
  */
@@ -22,6 +23,8 @@ export class ValueSetService extends BaseService {
   @Inject()
   utils: Utils;
 
+  //方法缓存,30s内如果再次请求,就会读redis里的缓存数据
+  @CoolCache(30)
   async getValueSetRoot(query) {
     let { pid } = query;
     let list = await this.valueSetEntity.find({ pid });
@@ -33,6 +36,7 @@ export class ValueSetService extends BaseService {
     });
   }
 
+  @CoolCache(30)
   async getValueSetByEname(query) {
     let { ename } = query;
     let enameList = await this.valueSetEntity.find({ ename });

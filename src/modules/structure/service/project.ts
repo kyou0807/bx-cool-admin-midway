@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-23 15:41:18
- * @LastEditTime: 2022-05-23 15:25:14
+ * @LastEditTime: 2022-06-20 15:31:53
  */
 import { Provide } from '@midwayjs/decorator';
 import { BaseService, CoolCommException } from '@cool-midway/core';
@@ -34,8 +34,6 @@ export class ProjectService extends BaseService {
    * 项目新增
    */
   async add(param) {
-    console.log('param: ', param);
-
     let { roleIdList } = param;
     if (!roleIdList) {
       // 没有角色列表,就去查当前用户的角色

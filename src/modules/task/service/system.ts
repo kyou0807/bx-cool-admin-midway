@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-27 14:24:57
- * @LastEditTime: 2022-05-04 16:19:33
+ * @LastEditTime: 2022-06-20 16:46:06
  */
 import { Inject, Logger, Provide } from '@midwayjs/decorator';
 import { BaseService } from '@cool-midway/core';
@@ -67,7 +67,7 @@ export class TaskSystemService extends BaseService {
     this.fileTools.createdFolder(`buildProject/${project.uuid}`);
     let zipPath = `buildProject/${project.uuid}/dist-${+new Date()}.zip`;
     await this.fileTools.zipFile(
-      path.join(this.baseDir, '../', 'buildProject/dist'),
+      path.join(this.baseDir, '../', `buildProject/${project.uuid}`),
       path.join(this.baseDir, '../', zipPath)
     );
 
