@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-27 14:24:57
- * @LastEditTime: 2022-06-28 14:09:47
+ * @LastEditTime: 2022-06-28 14:19:43
  */
 import {
   App,
@@ -22,11 +22,9 @@ import { Repository } from 'typeorm';
 import * as _ from 'lodash';
 import { FileTools } from '../../../comm/fileTools';
 import { CacheManager } from '@midwayjs/cache';
-import { socketType } from '../../../socket/socketType';
 import { Context } from '@midwayjs/koa';
 import { ProjectRoleEntity } from '../../structure/entity/project_role';
 import { BaseSysUserRoleEntity } from '../../base/entity/sys/user_role';
-const path = require('path');
 /**
  * 描述
  */

@@ -3,12 +3,12 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-05-04 15:23:46
- * @LastEditTime: 2022-06-27 10:44:59
+ * @LastEditTime: 2022-06-28 14:19:14
  */
 const fs = require('fs');
 const path = require('path');
 let archiver = require('archiver');
-const encrypted = require('archiver-zip-encrypted');
+// const encrypted = require('archiver-zip-encrypted');
 import { ILogger } from '@midwayjs/logger';
 
 import { Inject, Logger, Provide } from '@midwayjs/decorator';

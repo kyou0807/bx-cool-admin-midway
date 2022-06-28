@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-20 17:14:09
- * @LastEditTime: 2022-06-21 17:29:55
+ * @LastEditTime: 2022-06-28 14:18:58
  */
 import {
   Provide,
@@ -17,7 +17,6 @@ import { CoolController, BaseController } from '@cool-midway/core';
 import { valueSetEntity } from '../../../entity/sys/value_set';
 import { ValueSetService } from '../../../service/sys/valueSet';
 import { Application as SocketApplication } from '@midwayjs/socketio';
-import { socketType } from '../../../../../socket/socketType';
 
 /**
  * 描述

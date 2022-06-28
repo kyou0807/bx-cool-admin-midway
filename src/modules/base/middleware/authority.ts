@@ -10,7 +10,6 @@ import { RESCODE } from '@cool-midway/core';
 import * as jwt from 'jsonwebtoken';
 import { NextFunction, Context } from '@midwayjs/koa';
 import { Application as SocketApplication } from '@midwayjs/socketio';
-import { socketType } from '../../../socket/socketType';
 import { IMiddleware, IMidwayApplication } from '@midwayjs/core';
 import { CacheManager } from '@midwayjs/cache';
 const localRegExp = '|.*/comm/downloadDist';
