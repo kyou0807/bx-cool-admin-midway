@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 09:33:51
- * @LastEditTime: 2022-05-19 16:02:20
+ * @LastEditTime: 2022-06-27 14:17:09
  */
 import { EntityModel } from '@midwayjs/orm';
 import { BaseEntity } from '@cool-midway/core';
@@ -31,8 +31,8 @@ export class ProjectEntity extends BaseEntity {
   @ApiProperty({ example: '', description: '创建人' })
   userId: number;
 
-  @Column({ comment: '任务id', default: 0 })
-  @ApiProperty({ example: '0', description: '任务id' })
+  @Column({ comment: '打包配置id', default: 0 })
+  @ApiProperty({ example: '0', description: '打包配置id' })
   taskId: number;
 
   // 页面列表

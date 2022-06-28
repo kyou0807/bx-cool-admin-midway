@@ -2,6 +2,8 @@ import { CoolConfig } from '@cool-midway/core';
 import { MODETYPE } from '@cool-midway/file';
 import { MidwayConfig } from '@midwayjs/core';
 import * as redisStore from 'cache-manager-ioredis';
+import { createRedisAdapter } from '@midwayjs/socketio';
+
 // import * as fsStore from 'cache-manager-fs-hash';
 
 export default {
@@ -18,6 +20,13 @@ export default {
   view: {
     mapping: {
       '.html': 'ejs',
+    },
+  },
+  socketIO: {
+    adapter: createRedisAdapter({ host: '42.192.94.104', port: 6380 }),
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
     },
   },
   // 本地缓存

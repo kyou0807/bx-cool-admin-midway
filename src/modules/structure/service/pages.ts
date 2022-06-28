@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-24 13:18:37
- * @LastEditTime: 2022-06-17 09:41:57
+ * @LastEditTime: 2022-06-28 11:08:57
  */
 import { Provide } from '@midwayjs/decorator';
 import { BaseService, CoolCommException } from '@cool-midway/core';
@@ -65,7 +65,8 @@ export class PagesService extends BaseService {
         throw new CoolCommException('您没有权限访问该项目的页面');
       }
     }
-
+    // bolb字段转string
+    pagesObj.json = pagesObj.json.toString('utf-8');
     return pagesObj;
   }
 }

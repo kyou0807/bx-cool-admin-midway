@@ -19,6 +19,13 @@ export default {
     // 字符集
     charset: 'utf8mb4',
   },
+  midwayLogger: {
+    taskLog: {
+      disableConsole: true, // 是否禁用打印到控制台，默认禁用
+      level: 'warn', // 服务器默认warn
+      consoleLevel: 'warn',
+    },
+  },
   cool: {
     // 是否自动导入数据库
     initDB: true,

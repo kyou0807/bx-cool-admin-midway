@@ -1,4 +1,10 @@
-import { Inject, Provide, Config } from '@midwayjs/decorator';
+import {
+  Inject,
+  Provide,
+  Config,
+  App,
+  MidwayFrameworkType,
+} from '@midwayjs/decorator';
 import { BaseService, CoolCommException, RESCODE } from '@cool-midway/core';
 import { LoginDTO } from '../../dto/login';
 import * as svgCaptcha from 'svg-captcha';
@@ -15,6 +21,9 @@ import * as jwt from 'jsonwebtoken';
 import * as svgToDataURL from 'mini-svg-data-uri';
 import { Context } from '@midwayjs/koa';
 import { CacheManager } from '@midwayjs/cache';
+import { Application as SocketApplication } from '@midwayjs/socketio';
+import { socketType } from '../../../../socket/socketType';
+// import { socketType } from '../../../socket/socketType';
 
 /**
  * 登录
@@ -41,6 +50,9 @@ export class BaseSysLoginService extends BaseService {
 
   @Config('module.base')
   coolConfig;
+
+  @App(MidwayFrameworkType.WS_IO)
+  socketApp: SocketApplication;
 
   /**
    * 登录
@@ -69,7 +81,6 @@ export class BaseSysLoginService extends BaseService {
 
       // 生成token
       const { expire, refreshExpire } = this.coolConfig.jwt.token;
-      console.log('这里有执行,额?????!~~~~~~~~~~~~~~~');
       const result = {
         expire,
         token: await this.generateToken(user, roleIds, expire),
@@ -96,6 +107,16 @@ export class BaseSysLoginService extends BaseService {
         result.token
       );
 
+      // 发送广播,把其他登录人都踢出去
+
+      let clientIdList: Array<string> = await this.cacheManager.get(
+        `socket:${user.id}`
+      );
+      if (clientIdList) {
+        this.socketApp.of('/socket').to(clientIdList).emit(socketType.logout);
+        // 清空所有clientId
+        await this.cacheManager.del(`socket:${user.id}`);
+      }
       return result;
     } else {
       throw new CoolCommException('验证码不正确');

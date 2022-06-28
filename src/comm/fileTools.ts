@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-05-04 15:23:46
- * @LastEditTime: 2022-05-04 16:20:42
+ * @LastEditTime: 2022-06-27 10:44:59
  */
 const fs = require('fs');
 const path = require('path');
@@ -32,12 +32,16 @@ export class FileTools {
    * @author: 池樱千幻
    */
   createdFolder(FolderPath) {
-    if (!fs.existsSync(path.join(this.baseDir, '../', FolderPath))) {
-      this.logger.info('文件夹不存在!');
-      fs.mkdirSync(path.join(this.baseDir, '../', FolderPath));
-      this.logger.info(`创建${FolderPath}成功!`);
-    } else {
-      this.logger.info('文件夹已存在!');
+    try {
+      if (!fs.existsSync(path.join(this.baseDir, '../', FolderPath))) {
+        this.logger.info('文件夹不存在!');
+        fs.mkdirSync(path.join(this.baseDir, '../', FolderPath));
+        this.logger.info(`创建${FolderPath}成功!`);
+      } else {
+        this.logger.info('文件夹已存在!');
+      }
+    } catch (error) {
+      this.logger.info(error);
     }
   }
 
@@ -80,10 +84,11 @@ export class FileTools {
    * @author: 池樱千幻
    */
   zipFile(targetFilePath, outFilePath) {
+    console.log('targetFilePath: ', targetFilePath, outFilePath);
     return new Promise((resolve, reject) => {
       // 创建文件输出流
       let output = fs.createWriteStream(outFilePath);
-      archiver.registerFormat('zip-encrypted', encrypted);
+      // archiver.registerFormat('zip-encrypted', encrypted);
       let archive = archiver('zip', {
         zlib: { level: 9 }, // 设置压缩级别
         encryptionMethod: 'aes256',

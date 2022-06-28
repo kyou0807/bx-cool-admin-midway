@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:37:02
- * @LastEditTime: 2022-06-17 09:42:12
+ * @LastEditTime: 2022-06-28 11:15:51
  */
 import { Body, Inject, Post, Provide } from '@midwayjs/decorator';
 import {
@@ -23,6 +23,7 @@ const uuid = require('node-uuid');
 @CoolController({
   api: ['add', 'delete', 'update', 'info', 'list', 'page'],
   entity: PagesEntity,
+  service: PagesService,
   insertParam: ctx => {
     let { json } = ctx.request.body;
     if (!json) {
@@ -37,7 +38,17 @@ const uuid = require('node-uuid');
   },
   pageQueryOp: {
     keyWordLikeFields: ['a.name', 'b.name'],
-    select: ['a.*', 'b.name AS projectName'],
+    select: [
+      'a.id',
+      'a.height',
+      'a.width',
+      'a.name',
+      'a.projectUuid',
+      'a.url',
+      'a.uuid',
+      'a.createTime',
+      'b.name AS projectName',
+    ],
     join: [
       {
         entity: ProjectEntity,

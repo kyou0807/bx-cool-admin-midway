@@ -1,8 +1,16 @@
-import { App, Config, Inject, Middleware } from '@midwayjs/decorator';
+import {
+  App,
+  Config,
+  Inject,
+  Middleware,
+  MidwayFrameworkType,
+} from '@midwayjs/decorator';
 import * as _ from 'lodash';
 import { RESCODE } from '@cool-midway/core';
 import * as jwt from 'jsonwebtoken';
 import { NextFunction, Context } from '@midwayjs/koa';
+import { Application as SocketApplication } from '@midwayjs/socketio';
+import { socketType } from '../../../socket/socketType';
 import { IMiddleware, IMidwayApplication } from '@midwayjs/core';
 import { CacheManager } from '@midwayjs/cache';
 const localRegExp = '|.*/comm/downloadDist';
@@ -25,6 +33,9 @@ export class BaseAuthorityMiddleware
   @App()
   app: IMidwayApplication;
 
+  @App(MidwayFrameworkType.WS_IO)
+  socketApp: SocketApplication;
+
   resolve() {
     return async (ctx: Context, next: NextFunction) => {
       let statusCode = 200;
@@ -36,6 +47,20 @@ export class BaseAuthorityMiddleware
       if (_.startsWith(url, adminUrl)) {
         try {
           ctx.admin = jwt.verify(token, this.jwtConfig.jwt.secret);
+          // 校验token是否存在于redis
+          const redisToken = await this.cacheManager.get(
+            `admin:token:${ctx.admin.userId}`
+          );
+
+          // 如果redis中不存在token，则返回登录, 前台token与redis中的token不一致,说明有其他用户登录相同的账号
+          if (!redisToken || token !== redisToken) {
+            ctx.status = 401;
+            ctx.body = {
+              code: 999,
+              message: '登录失效~',
+            };
+            return;
+          }
         } catch (err) {}
         // 不需要登录 无需权限校验
         if (new RegExp(`^${adminUrl}?.*/open/${localRegExp}`).test(url)) {

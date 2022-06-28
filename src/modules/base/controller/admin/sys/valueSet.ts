@@ -3,12 +3,21 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-20 17:14:09
- * @LastEditTime: 2022-04-28 00:35:17
+ * @LastEditTime: 2022-06-21 17:29:55
  */
-import { Provide, Post, Inject, Body } from '@midwayjs/decorator';
+import {
+  Provide,
+  Post,
+  Inject,
+  Body,
+  App,
+  MidwayFrameworkType,
+} from '@midwayjs/decorator';
 import { CoolController, BaseController } from '@cool-midway/core';
 import { valueSetEntity } from '../../../entity/sys/value_set';
 import { ValueSetService } from '../../../service/sys/valueSet';
+import { Application as SocketApplication } from '@midwayjs/socketio';
+import { socketType } from '../../../../../socket/socketType';
 
 /**
  * 描述
@@ -24,6 +33,9 @@ import { ValueSetService } from '../../../service/sys/valueSet';
 export class valueSetAdminController extends BaseController {
   @Inject()
   valueSetService: ValueSetService;
+
+  @App(MidwayFrameworkType.WS_IO)
+  socketApp: SocketApplication;
 
   @Post('/getValueSetRoot')
   async getValueSetRoot(@Body('pid') pid: number) {
