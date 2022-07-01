@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:35:51
- * @LastEditTime: 2022-05-19 16:14:56
+ * @LastEditTime: 2022-07-01 13:28:44
  */
 import { Provide, Inject } from '@midwayjs/decorator';
 import { CoolController, BaseController } from '@cool-midway/core';
@@ -52,16 +52,22 @@ const uuid = require('node-uuid');
       },
     ],
     where: async ctx => {
+      let whereArr = [];
       if (ctx.admin.username == 'admin') {
-        return [];
+        whereArr = [];
       } else {
-        return [
+        whereArr = [
           [
             'c.roleId in  (	select roleId from base_sys_user_role  where userId = :userId) ',
             { userId: ctx.admin.userId },
           ],
         ];
       }
+      let { type } = ctx.request.body;
+      if (type) {
+        whereArr.push(['a.type = :type', { type }]);
+      }
+      return whereArr;
     },
     extend: async (find: SelectQueryBuilder<ProjectEntity>) => {
       find.groupBy('a.uuid,a.id,a.NAME,b.NAME');
