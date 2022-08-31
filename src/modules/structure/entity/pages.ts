@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 10:52:34
- * @LastEditTime: 2022-06-28 10:23:03
+ * @LastEditTime: 2022-08-23 17:02:39
  */
 import { EntityModel } from '@midwayjs/orm';
 import { BaseEntity } from '@cool-midway/core';
@@ -35,7 +35,7 @@ export class PagesEntity extends BaseEntity {
   @ApiProperty({ example: '', description: '高度' })
   height: number;
 
-  @Column({ comment: '页面json', type: 'mediumblob' })
+  @Column({ comment: '页面json', type: 'longblob' })
   @ApiProperty({ example: '', description: '页面json' })
   json: string;
 

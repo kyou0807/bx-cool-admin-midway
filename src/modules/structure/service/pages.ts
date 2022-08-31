@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-24 13:18:37
- * @LastEditTime: 2022-06-28 11:08:57
+ * @LastEditTime: 2022-08-30 14:47:59
  */
 import { Provide } from '@midwayjs/decorator';
 import { BaseService, CoolCommException } from '@cool-midway/core';
@@ -35,12 +35,10 @@ export class PagesService extends BaseService {
         throw new CoolCommException('您没有权限访问该项目的页面');
       }
     }
-
-    let list = await this.pagesEntity.find({ projectUuid });
-    return list.map(item => {
-      delete item.json;
-      return item;
-    });
+    return await this.nativeQuery(
+      'select id,createTime,updateTime,name,url,width,height,uuid,projectUuid from pages where projectUuid =?',
+      [projectUuid]
+    );
   }
 
   async getPageInfoByIdOrUuid(id, uuid, roleIdList) {

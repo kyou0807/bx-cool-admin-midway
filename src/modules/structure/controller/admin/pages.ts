@@ -3,7 +3,7 @@
  * @Autor: 池樱千幻
  * @Change: 池樱千幻
  * @Date: 2022-04-22 15:37:02
- * @LastEditTime: 2022-06-28 11:15:51
+ * @LastEditTime: 2022-08-30 14:56:50
  */
 import { Body, Inject, Post, Provide } from '@midwayjs/decorator';
 import {
@@ -16,6 +16,8 @@ import { ProjectEntity } from '../../entity/project';
 import { PagesService } from '../../service/pages';
 import { Context } from '@midwayjs/koa';
 const uuid = require('node-uuid');
+const _ = require('lodash');
+const fs = require('fs');
 /**
  * 描述
  */
@@ -24,6 +26,7 @@ const uuid = require('node-uuid');
   api: ['add', 'delete', 'update', 'info', 'list', 'page'],
   entity: PagesEntity,
   service: PagesService,
+  infoIgnoreProperty: ['json'],
   insertParam: ctx => {
     let { json } = ctx.request.body;
     if (!json) {
@@ -107,5 +110,26 @@ export class PagesAdminController extends BaseController {
         this.ctx.admin.roleIds
       )
     );
+  }
+
+  /**
+   * 文件上传
+   */
+  @Post('/uploadPageByJson', { summary: '文件上传,数据入库' })
+  async upload() {
+    if (_.isEmpty(this.ctx.files)) {
+      throw new CoolCommException('上传文件为空');
+    }
+
+    const file = this.ctx.files[0];
+    // 利用临时路径,读取文件
+    let fileData = fs.readFileSync(file.data);
+
+    let pages = this.ctx.fields;
+
+    pages.json = fileData.toString();
+    pages.id = Number(pages.id);
+
+    return this.ok(await this.pagesService.update(pages));
   }
 }

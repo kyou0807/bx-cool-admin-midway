@@ -12,6 +12,13 @@ export default {
   koa: {
     port: 8001,
   },
+  bodyParser: {
+    enableTypes: ['json', 'form', 'text', 'xml'],
+    formLimit: '1gb',
+    jsonLimit: '1gb',
+    textLimit: '1gb',
+    xmlLimit: '1gb',
+  },
   // 文件上传
   upload: {
     fileSize: '200mb',
